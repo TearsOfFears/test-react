@@ -3,35 +3,35 @@ import { useState, useEffect } from "react";
 import Button from "../Button/Button";
 import ListUsers from "../ListUsers/ListUsers";
 import Input from "./../../components/Input/Input";
+import { useDispatch, useSelector } from "react-redux";
+import { onGetAllUsers } from "../../redux/users/user.actions";
+const mapState = ({ users }) => ({ usersFetch: users.data });
 function GetAllUsers() {
+	const dispatch = useDispatch();
+	const { usersFetch } = useSelector(mapState);
 	const [users, setUser] = useState([]);
 	const [search, setSearch] = useState("");
-	const handleGet = (sort) => {
-		axios
-			.get(
-				`https://jsonplaceholder.typicode.com/users?_sort=username&_order=${sort}`
-			)
-			.then((res) => setUser(res.data))
-			.catch((err) => console.log(err));
+
+	const handleGet = (e) => {
+		e.preventDefault();
+		
+		dispatch(onGetAllUsers(`_sort=username&_order=${e.target.innerText}`));
 	};
 	useEffect(() => {
-		handleGet();
+		dispatch(onGetAllUsers());
 	}, []);
 
 	const handleSearch = (e) => {
 		const name = e.target.value;
-		axios
-			.get(`https://jsonplaceholder.typicode.com/users?username_like=${name}`)
-			.then((res) => setUser(res.data))
-			.catch((err) => console.log(err));
+		dispatch(onGetAllUsers(`username_like=${name}`));
 	};
 	return (
 		<div>
 			GetAllUsers
 			<Input handleChange={(e) => handleSearch(e)} />
-			<ListUsers users={users} />
-			<Button onClick={(e) => handleGet("desc")}>desc</Button>
-			<Button onClick={(e) => handleGet("asc")}>asc</Button>
+			<Button onClick={(e) => handleGet(e)}>desc</Button>
+			<Button onClick={(e) => handleGet(e)}>asc</Button>
+			<ListUsers users={usersFetch} />
 		</div>
 	);
 }
