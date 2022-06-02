@@ -2,7 +2,9 @@ import userTypes from "./user.types";
 
 const INITIAL_STATE = {
   loading:true,
-  error: ''
+  error: '',
+  data:[],
+  currPage:1,
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -11,18 +13,26 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         data: action.payload,
+        //currPage:action.payload,
         loading:true,
       }
       case userTypes.LOAD_USERS_SUCCESS:
         return {
           ...state,
           data: action.payload,
+          //currPage:action.payload,
           loading:false
         }
-        case userTypes.LOAD_USERS_ERROR: {
+        case userTypes.SET_ACTIVE_PAGE:
+          return {
+            ...state,
+            currPage:action.payload,
+          }
+        case userTypes.LOAD_USERS_ERROR: 
+        {
           return {
               ...state,
-              loading: false,
+              loading: true,
               error: action.error
           };
       }
