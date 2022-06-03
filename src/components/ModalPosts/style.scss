@@ -1,0 +1,67 @@
+@import "./../../scss/vars.scss";
+.showAnimation{
+    display: block;
+    opacity: 1;
+    animation-duration: 1s;
+    animation-name: fade;
+}
+.modalPosts {
+    display: block;
+    opacity: 1;
+    padding: 70px;
+    margin-left: 30px;
+    background-color: $cardColor;
+    border-radius: 40px;
+    ul {
+     
+       margin: 0;
+        list-style-type: none;
+        padding: 0;
+
+        li {
+            border-bottom: 1px solid #4C4C6A;
+
+            &:hover {
+                cursor: pointer;
+            }
+
+            h1 {
+                font-weight: 600;
+                font-size: 36px;
+                line-height: 45px;
+            }
+
+            p {
+
+                font-weight: 400;
+                font-size: 18px;
+                line-height: 23px;
+            }
+        }
+
+        li:nth-last-child(-n+1) {
+            border-bottom: none;
+        }
+    }
+}
+
+.none {
+    display: none;
+    opacity: 0;
+    animation-duration: 1s;
+    animation-name: fade;
+
+}
+
+
+
+
+@keyframes fade {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}

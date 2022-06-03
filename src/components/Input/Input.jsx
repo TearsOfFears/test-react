@@ -1,13 +1,13 @@
 import React from "react";
+import "./style.scss";
 const Input = ({ handleChange, ...otherProprs }) => {
 	return (
-		<div className="formRow">
-			{/* {Label && <label>{Label}</label>} */}
-			<div className="wrapper-input">
-				{" "}
-				<input className="formInput" onChange={handleChange} {...otherProprs} />
-			</div>
-		</div>
+		<input
+			className="formInput"
+			onChange={handleChange}
+			{...otherProprs}
+			placeholder="Search"
+		/>
 	);
 };
 

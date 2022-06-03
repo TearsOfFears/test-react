@@ -1,21 +1,41 @@
 import postTypes from "./post.types";
 
 const INITIAL_STATE = {
-  post: null,
+  posts: [],
+  loading:true,
+  error:[],
+  modal:false
 };
 
 const postReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case postTypes.GET_USERS:
+    case postTypes.LOAD_POSTS_LOADING:
       return {
         ...state,
-        currentUser: action.payload,
+        posts: action.payload,
+        loading:true,
+        modal:true
       }
-      case postTypes.LOADING:
+      case postTypes.LOAD_POSTS_SUCCESS:
         return {
           ...state,
-          loading: action.payload
+          posts: action.payload,
+          loading:false,
+          modal:true
         }
+        case postTypes.HIDE_SHOW_MODAL:
+          return {
+            ...state,
+            modal:action.payload,
+          }
+        case postTypes.LOAD_POSTS_ERROR: 
+        {
+          return {
+              ...state,
+              loading: true,
+              error: action.error,
+          };
+      }
     default:
       return state;
   }
