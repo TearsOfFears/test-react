@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./style.scss";
 import Button from "./../Button/Button";
@@ -11,13 +11,25 @@ function ModalPosts({ posts, modal, setHideModal, toggleModal }) {
 	const handleShow = (id) => {
 		setShow(id);
 	};
-	console.log(modalStore);
-
-	if (!modal) return null;
+	const modalRef = useRef();
+	useEffect(() => {
+		const clickOutSide = (e) => {
+			if (e.path.includes(modalRef.current)) {
+				setHideModal(false);
+			}
+		};
+		document.addEventListener("click", clickOutSide);
+		return () => document.body.removeEventListener("click", clickOutSide)
+	}, []);
+	console.log(modalRef);
+	console.log(modal);
 	return (
-		<div className={modal && modalStore ? "showAnimation modalPosts" : "none"}>
+		<div
+			className={modal ? "showAnimation modalPosts" : "none"}
+			ref={modalRef}
+		>
 			<Button
-      style={"buttonsSort"}
+				style={"buttonsSort"}
 				onClick={(e) => {
 					dispatch(onModalHideShow(false));
 				}}
