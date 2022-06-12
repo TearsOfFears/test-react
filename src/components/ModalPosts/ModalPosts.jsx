@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "./style.scss";
 import Button from "./../Button/Button";
 import { onModalHideShow } from "../../redux/posts/post.actions";
-function ModalPosts({ posts, modal, setHideModal, toggleModal }) {
+function ModalPosts({ posts, modal, setHideModal, toggleModal,modalRef }) {
 	const [show, setShow] = useState(1);
 	const dispatch = useDispatch();
 	const loading = useSelector((store) => store.posts.loading);
@@ -11,27 +11,17 @@ function ModalPosts({ posts, modal, setHideModal, toggleModal }) {
 	const handleShow = (id) => {
 		setShow(id);
 	};
-	const modalRef = useRef();
-	useEffect(() => {
-		const clickOutSide = (e) => {
-			if (e.path.includes(modalRef.current)) {
-				setHideModal(false);
-			}
-		};
-		document.addEventListener("click", clickOutSide);
-		return () => document.body.removeEventListener("click", clickOutSide)
-	}, []);
-	console.log(modalRef);
-	console.log(modal);
+
 	return (
 		<div
 			className={modal ? "showAnimation modalPosts" : "none"}
-			ref={modalRef}
+	
 		>
 			<Button
 				style={"buttonsSort"}
 				onClick={(e) => {
 					dispatch(onModalHideShow(false));
+					setHideModal(false)
 				}}
 			>
 				Close{" "}
